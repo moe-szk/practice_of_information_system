@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "practice_of_information_system",
+			"path": "."
+		},
+		{
+			"name": "images",
+			"path": "../tutorial/images"
+		}
+	],
+	"settings": {}
+}
