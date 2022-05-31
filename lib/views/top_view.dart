@@ -67,8 +67,12 @@ class TopPageState {
 class TopPageStateNotifier extends StateNotifier<TopPageState> {
   TopPageStateNotifier() : super(const TopPageState());
   // void increment() {}
-  void updateStatus(status) {
-    state = state.copyWith(stateNumber: status);
+  void updateStatus(status, stapleValue, mainValue, sideValue) {
+    state = state.copyWith(
+        stateNumber: status,
+        state1: stapleValue,
+        state2: mainValue,
+        state3: sideValue);
     print("status is updated to $status");
   }
 
@@ -80,10 +84,14 @@ class TopPageStateNotifier extends StateNotifier<TopPageState> {
     state = state.copyWith(isLoading: false);
   }
 
-  void register(id, userName, status) {
-    state = state.copyWith(id: id);
-    state = state.copyWith(userName: userName);
-    state = state.copyWith(stateNumber: status);
+  void register(id, userName, status, stapleValue, mainValue, sideValue) {
+    state = state.copyWith(
+        id: id,
+        userName: userName,
+        stateNumber: status,
+        state1: stapleValue,
+        state2: mainValue,
+        state3: sideValue);
   }
 }
 

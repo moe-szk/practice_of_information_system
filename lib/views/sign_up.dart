@@ -109,7 +109,6 @@ class RegisterButton extends StatelessWidget {
     if (res == null) return null;
     final body = json.decode(res.body);
     final user = User.fromJson(body);
-    // final user = User.fromJson({"id": 0, "userName": "testUser", "status": 0});
     return user;
   }
 
@@ -120,8 +119,13 @@ class RegisterButton extends StatelessWidget {
       return ElevatedButton(
         onPressed: () {
           _updateStatus()
-              .then((user) =>
-                  notifier.register(user.id, user.userName, user.status))
+              .then((user) => notifier.register(
+                  user.id,
+                  user.userName,
+                  user.status,
+                  user.stapleValue,
+                  user.mainValue,
+                  user.sideValue))
               .whenComplete(() => Navigator.of(context).pop());
         },
         child: const Text('Sign Up'),

@@ -110,7 +110,8 @@ class CameraButton extends StatelessWidget {
             onPressed: (() {
               notifier.startLoading();
               _updateStatus(notifier.state.id)
-                  .then((user) => notifier.updateStatus(user.status))
+                  .then((user) => notifier.updateStatus(user.status,
+                      user.stapleValue, user.mainValue, user.sideValue))
                   .whenComplete(() => notifier.stopLoading());
               // 例外処理
             }),
