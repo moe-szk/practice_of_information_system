@@ -49,17 +49,16 @@ class CameraButton extends StatelessWidget {
     return tags["Image DateTime"].toString();
   }
 
-  Future _postImage() async {
+  Future _postImage(int id) async {
     final base64Image = await _getBase64Image();
     if (base64Image == null) {
       print("err");
       return null;
     }
-    // String url = "http://localhost:8000/image";
-    String url = "https://httpbin.org/post";
+    String url = "http://localhost:8000/image";
     final steps = await _fetchStepData();
     Map<String, String> headers = {"content-type": "application/json"};
-    final obj = {"userId": 0, "imageBase64": base64Image, "step": steps};
+    final obj = {"userId": id, "imageBase64": base64Image, "step": steps};
     String body = json.encode(obj);
 
     http.Response res =
@@ -67,15 +66,12 @@ class CameraButton extends StatelessWidget {
     return res;
   }
 
-  Future _updateStatus() async {
+  Future _updateStatus(int id) async {
     // resのステータスチェック
     //   if (res.statusCode != 200) {
-    final res = await _postImage();
+    final res = await _postImage(id);
     if (res == null) return null;
-    final body = json.decode(res.body);
-    print(body);
-    // final user = User.fromJson(json.decode(body["data"]));
-    final user = User.fromJson({"id": 0, "userName": "testUser", "status": 0});
+    final user = User.fromJson(json.decode(res.body));
     print(user);
     return user;
   }
@@ -83,7 +79,7 @@ class CameraButton extends StatelessWidget {
   final HealthFactory health = HealthFactory();
 
   Future _fetchStepData() async {
-    int? steps;
+    int? steps = 0;
 
     // get steps for today (i.e., since midnight)
     final now = DateTime.now();
@@ -99,7 +95,7 @@ class CameraButton extends StatelessWidget {
       }
 
       print('Total number of steps: $steps');
-      return steps;
+      return steps ?? 0;
     } else {
       print("Authorization not granted");
     }
@@ -113,7 +109,7 @@ class CameraButton extends StatelessWidget {
         child: FloatingActionButton(
             onPressed: (() {
               notifier.startLoading();
-              _updateStatus()
+              _updateStatus(notifier.state.id)
                   .then((user) => notifier.updateStatus(user.status))
                   .whenComplete(() => notifier.stopLoading());
               // 例外処理

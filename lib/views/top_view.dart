@@ -26,7 +26,6 @@ class TopPage extends StatelessWidget {
 class TopPageState {
   const TopPageState({
     this.id = 0,
-    // required this.id,
     this.stateNumber = 0,
     this.userName = 'You',
     this.isLoading = false,
@@ -44,6 +43,7 @@ class TopPageState {
   final int state3;
 
   TopPageState copyWith({
+    int? id,
     int? stateNumber,
     String? userName,
     bool? isLoading,
@@ -52,6 +52,7 @@ class TopPageState {
     int? state3,
   }) {
     return TopPageState(
+      id: id ?? this.id,
       stateNumber: stateNumber ?? this.stateNumber,
       userName: userName ?? this.userName,
       isLoading: isLoading ?? this.isLoading,
@@ -77,6 +78,12 @@ class TopPageStateNotifier extends StateNotifier<TopPageState> {
 
   void stopLoading() {
     state = state.copyWith(isLoading: false);
+  }
+
+  void register(id, userName, status) {
+    state = state.copyWith(id: id);
+    state = state.copyWith(userName: userName);
+    state = state.copyWith(stateNumber: status);
   }
 }
 
