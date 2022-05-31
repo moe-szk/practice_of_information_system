@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:practice_of_information_system/views/widgets/camera_button.dart';
 
 import './widgets/avatar.dart';
-//import './widgets/camera_button.dart';
+import './widgets/camera_button.dart';
+import 'widgets/loading_widget.dart';
 
 class TopPage extends StatelessWidget {
-  const TopPage({Key? key}): super(key: key);
+  const TopPage({Key? key}) : super(key: key);
 
-  @override 
-  Widget build(BuildContext cotext) {
-    
-    return ProviderScope ( 
-      child: Column(  mainAxisAlignment:MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Avatar(),
-          CameraButton()
-        ],
-      )
-    );
+  @override
+  Widget build(BuildContext context) {
+    return ProviderScope(
+        child: Stack(children: <Widget>[
+      Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[Avatar(), CameraButton()],
+      ),
+      const LoadingWidget(),
+    ]));
   }
 }
 
 // ①State class
-@immutable 
+@immutable
 class TopPageState {
   const TopPageState({
+    this.id = 0,
+    // required this.id,
     this.stateNumber = 0,
     this.userName = 'You',
     this.isLoading = false,
@@ -34,6 +35,7 @@ class TopPageState {
     this.state3 = 0,
   });
 
+  final int id;
   final int stateNumber;
   final String userName;
   final bool isLoading;
@@ -42,32 +44,44 @@ class TopPageState {
   final int state3;
 
   TopPageState copyWith({
-    int?stateNumber, 
+    int? stateNumber,
     String? userName,
     bool? isLoading,
     int? state1,
     int? state2,
     int? state3,
-    }) {
-    return TopPageState (
-      stateNumber: stateNumber??this.stateNumber,
+  }) {
+    return TopPageState(
+      stateNumber: stateNumber ?? this.stateNumber,
       userName: userName ?? this.userName,
-      isLoading : isLoading??this.isLoading,
-      state1 : state1 ?? this.state1,
-      state2 : state2 ?? this.state2,
-      state3 : state3 ?? this.state3,
-      );
+      isLoading: isLoading ?? this.isLoading,
+      state1: state1 ?? this.state1,
+      state2: state2 ?? this.state2,
+      state3: state3 ?? this.state3,
+    );
   }
 }
 
 // ②class notifier
 class TopPageStateNotifier extends StateNotifier<TopPageState> {
-  TopPageStateNotifier(): super(const TopPageState());
+  TopPageStateNotifier() : super(const TopPageState());
   // void increment() {}
-  void updateState() {
-    state = state.copyWith(stateNumber: state.stateNumber+1);
+  void updateStatus(status) {
+    state = state.copyWith(stateNumber: status);
+    print("status is updated to $status");
+  }
+
+  void startLoading() {
+    state = state.copyWith(isLoading: true);
+  }
+
+  void stopLoading() {
+    state = state.copyWith(isLoading: false);
   }
 }
 
 // ③ global provider
-final topPageProvider = StateNotifierProvider<TopPageStateNotifier,TopPageState>((ref) {return TopPageStateNotifier();});
+final topPageProvider =
+    StateNotifierProvider<TopPageStateNotifier, TopPageState>((ref) {
+  return TopPageStateNotifier();
+});
