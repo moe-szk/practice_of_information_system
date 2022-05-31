@@ -11,6 +11,7 @@ class User1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(builder: ((context, ref,child) {
       final hp = ref.watch(battlePageProvider.select((state){return state.user1Hp;}));
+      final state = ref.watch(battlePageProvider.select((state){return state.user1State;}));
       final status1 = ref.watch(battlePageProvider.select((state){return state.user1Status1;}));
       final status2 = ref.watch(battlePageProvider.select((state){return state.user1Status2;}));
       final status3 = ref.watch(battlePageProvider.select((state){return state.user1Status3;}));
@@ -20,7 +21,7 @@ class User1 extends StatelessWidget {
       Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: <Widget>[
               Text('あなた'),
               Text('HP: $hp/100'),
-              Image.asset('images/6.png',width: 100,),
+              Image.asset('images/${state+1}.png',width: 100,),
               Text('✊: $status1'),
               Text('✌️: $status2'),
               Text('✋: $status3'),

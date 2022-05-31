@@ -13,24 +13,24 @@ class RankingPage extends StatelessWidget {
         child: ListView( 
           children: <Widget>[ 
             ListTile(
-              leading: Text('1'),
+              leading: Image.asset('images/3.png'),
               title: Text('user1'),
             ),
             ListTile(
-              leading:Text('2'),
+              leading: Image.asset('images/3.png'),
               title: Text('user2'),
             ),
             ListTile(
-              leading: Text('3'),
+              leading: Image.asset('images/2.png'),
               title: Text('user3'),
             ),
             ListTile(
-              leading: Text('4'),
-              title: Text('user3'),
+              leading: Image.asset('images/4.png'),
+              title: Text('user4'),
             ),
             ListTile(
-              leading: Text('5'),
-              title: Text('user3'),
+              leading: Image.asset('images/1.png'),
+              title: Text('user5'),
             ),
           ],
         )

@@ -66,8 +66,8 @@ class TopPageState {
 class TopPageStateNotifier extends StateNotifier<TopPageState> {
   TopPageStateNotifier() : super(const TopPageState());
   // void increment() {}
-  void updateStatus(status) {
-    state = state.copyWith(stateNumber: status);
+  void updateStatus(status,stapleValue,mainValue,sideValue) {
+    state = state.copyWith(stateNumber: status,state1:stapleValue,state2:mainValue,state3:sideValue);
     print("status is updated to $status");
   }
 

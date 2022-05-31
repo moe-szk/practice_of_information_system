@@ -75,7 +75,7 @@ class CameraButton extends StatelessWidget {
     final body = json.decode(res.body);
     print(body);
     // final user = User.fromJson(json.decode(body["data"]));
-    final user = User.fromJson({"id": 0, "userName": "testUser", "status": 0});
+    final user = User.fromJson({"id": 0, "userName": "testUser", "status": 0,"stapleValue":1,"mainValue":1,"sideValue":1});
     print(user);
     return user;
   }
@@ -114,7 +114,7 @@ class CameraButton extends StatelessWidget {
             onPressed: (() {
               notifier.startLoading();
               _updateStatus()
-                  .then((user) => notifier.updateStatus(user.status))
+                  .then((user) => notifier.updateStatus(user.status,user.stapleValue,user.mainValue,user.sideValue))
                   .whenComplete(() => notifier.stopLoading());
               // 例外処理
             }),

@@ -23,6 +23,9 @@ mixin _$User {
   int get id => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
   int get status => throw _privateConstructorUsedError;
+  int get stapleValue => throw _privateConstructorUsedError;
+  int get mainValue => throw _privateConstructorUsedError;
+  int get sideValue => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +36,13 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call({int id, String userName, int status});
+  $Res call(
+      {int id,
+      String userName,
+      int status,
+      int stapleValue,
+      int mainValue,
+      int sideValue});
 }
 
 /// @nodoc
@@ -49,6 +58,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? id = freezed,
     Object? userName = freezed,
     Object? status = freezed,
+    Object? stapleValue = freezed,
+    Object? mainValue = freezed,
+    Object? sideValue = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -63,6 +75,18 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int,
+      stapleValue: stapleValue == freezed
+          ? _value.stapleValue
+          : stapleValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      mainValue: mainValue == freezed
+          ? _value.mainValue
+          : mainValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      sideValue: sideValue == freezed
+          ? _value.sideValue
+          : sideValue // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -72,7 +96,13 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$$_UserCopyWith(_$_User value, $Res Function(_$_User) then) =
       __$$_UserCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String userName, int status});
+  $Res call(
+      {int id,
+      String userName,
+      int status,
+      int stapleValue,
+      int mainValue,
+      int sideValue});
 }
 
 /// @nodoc
@@ -89,6 +119,9 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? id = freezed,
     Object? userName = freezed,
     Object? status = freezed,
+    Object? stapleValue = freezed,
+    Object? mainValue = freezed,
+    Object? sideValue = freezed,
   }) {
     return _then(_$_User(
       id: id == freezed
@@ -103,6 +136,18 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int,
+      stapleValue: stapleValue == freezed
+          ? _value.stapleValue
+          : stapleValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      mainValue: mainValue == freezed
+          ? _value.mainValue
+          : mainValue // ignore: cast_nullable_to_non_nullable
+              as int,
+      sideValue: sideValue == freezed
+          ? _value.sideValue
+          : sideValue // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -111,7 +156,12 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_User implements _User {
   const _$_User(
-      {required this.id, required this.userName, required this.status});
+      {required this.id,
+      required this.userName,
+      required this.status,
+      required this.stapleValue,
+      required this.mainValue,
+      required this.sideValue});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -121,10 +171,16 @@ class _$_User implements _User {
   final String userName;
   @override
   final int status;
+  @override
+  final int stapleValue;
+  @override
+  final int mainValue;
+  @override
+  final int sideValue;
 
   @override
   String toString() {
-    return 'User(id: $id, userName: $userName, status: $status)';
+    return 'User(id: $id, userName: $userName, status: $status, stapleValue: $stapleValue, mainValue: $mainValue, sideValue: $sideValue)';
   }
 
   @override
@@ -134,7 +190,11 @@ class _$_User implements _User {
             other is _$_User &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.userName, userName) &&
-            const DeepCollectionEquality().equals(other.status, status));
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality()
+                .equals(other.stapleValue, stapleValue) &&
+            const DeepCollectionEquality().equals(other.mainValue, mainValue) &&
+            const DeepCollectionEquality().equals(other.sideValue, sideValue));
   }
 
   @JsonKey(ignore: true)
@@ -143,7 +203,10 @@ class _$_User implements _User {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(userName),
-      const DeepCollectionEquality().hash(status));
+      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(stapleValue),
+      const DeepCollectionEquality().hash(mainValue),
+      const DeepCollectionEquality().hash(sideValue));
 
   @JsonKey(ignore: true)
   @override
@@ -160,7 +223,10 @@ abstract class _User implements User {
   const factory _User(
       {required final int id,
       required final String userName,
-      required final int status}) = _$_User;
+      required final int status,
+      required final int stapleValue,
+      required final int mainValue,
+      required final int sideValue}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -170,6 +236,12 @@ abstract class _User implements User {
   String get userName => throw _privateConstructorUsedError;
   @override
   int get status => throw _privateConstructorUsedError;
+  @override
+  int get stapleValue => throw _privateConstructorUsedError;
+  @override
+  int get mainValue => throw _privateConstructorUsedError;
+  @override
+  int get sideValue => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

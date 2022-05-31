@@ -9,7 +9,7 @@ class Avatar extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child){
-      var imagesname = ['images/1.png','images/2.png','images/3.png','images/4.png','images/6.png','images/7.png','images/8.png','images/dead.png'];
+      var imagesname = ['images/1.png','images/2.png','images/3.png','images/4.png','images/5.png'];
       final userName = ref.watch(topPageProvider.select((state) {return state.userName;}));
       final stateNumber = ref.watch(topPageProvider.select((state) {return state.stateNumber;}));
       final state1 = ref.watch(topPageProvider.select((state) {return state.state1;}));
@@ -17,10 +17,11 @@ class Avatar extends StatelessWidget {
       final state3 = ref.watch(topPageProvider.select((state) {return state.state3;}));
     return Center(
       child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children:<Widget>[
-        Text( '$userName',),
+        Text( '$userName',style: TextStyle(fontSize:30,color:Colors.blue)),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: 
         [
           Image.asset(imagesname[stateNumber],width: 200,),
+          //Image.asset('imaegs/$stateNumber.png',width: 200,),
           Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children:[
             Text('$state1'),
             Text('$state2'),

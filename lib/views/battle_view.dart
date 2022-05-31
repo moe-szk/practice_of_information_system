@@ -6,6 +6,7 @@ import '../views/widgets/user1.dart';
 import '../views/widgets/user2.dart';
 import '../views/widgets/3_buttons.dart';
 
+
 class BattlePage extends StatelessWidget {
   const BattlePage({Key? key}): super(key:key);
 
@@ -28,6 +29,7 @@ class BattlePage extends StatelessWidget {
 class BattlePageState {
   const BattlePageState({
     this.user1Hp = 0,
+    this.user1State = 1,
     this.user1Status1 = 0, 
     this.user1Status2 = 0,
     this.user1Status3 = 0,
@@ -40,6 +42,7 @@ class BattlePageState {
     this.winner = '',
   });
   final int user1Hp;
+  final int user1State;
   final int user1Status1;
   final int user1Status2;
   final int user1Status3;
@@ -54,6 +57,7 @@ class BattlePageState {
   BattlePageState copyWith
   ({
     int? user1Hp,
+    int? user1State,
     int? user1Status1,
     int? user1Status2,
     int? user1Status3,
@@ -68,6 +72,7 @@ class BattlePageState {
   {
     return BattlePageState(
     user1Hp: user1Hp ?? this.user1Hp,
+    user1State: user1State ?? this.user1State,
     user1Status1: user1Status1 ?? this.user1Status1,
     user1Status2: user1Status2 ?? this.user1Status2,
     user1Status3: user1Status3 ?? this.user1Status3,
@@ -86,10 +91,14 @@ class BattlePageState {
 class BattlePageStateNotifier extends StateNotifier<BattlePageState> with WidgetsBindingObserver {
   
   BattlePageStateNotifier(): super(const BattlePageState());
-  void initBattle() {
-    state = state.copyWith(user1Hp: 100,user1Status1:Random().nextInt(50),user1Status2:Random().nextInt(50),user1Status3: Random().nextInt(50),user1Item: 0);
+
+  void initBattle(stateNumber,status1,status2,status3) {
+    // state = state.copyWith(user1Hp: 100,user1Status1:Random().nextInt(50),user1Status2:Random().nextInt(50),user1Status3: Random().nextInt(50),user1Item: 0);
+    state = state.copyWith(user1Hp: 100,user1State:stateNumber,user1Status1:status1,user1Status2:status2,user1Status3:status3,user1Item: 0);
     state = state.copyWith(user2Hp: 100,user2Status1:Random().nextInt(50),user2Status2:Random().nextInt(50),user2Status3: Random().nextInt(50),user2Item:0,winner:'');
+    print('initbattle $state,$status1,$status2,$status3');
   }
+
   void rock() {
     state = state.copyWith(user1Item: 1,user2Item: Random().nextInt(3) + 1);
     print('rock:');
@@ -108,7 +117,7 @@ class BattlePageStateNotifier extends StateNotifier<BattlePageState> with Widget
     }
   }
   void scis() {
-    state = state.copyWith(user1Item: 1,user2Item: Random().nextInt(3) + 1);
+    state = state.copyWith(user1Item: 2,user2Item: Random().nextInt(3) + 1);
     if(state.user2Item==1) {
       state = state.copyWith(user1Hp:state.user1Hp-state.user2Status1);
     } else if(state.user2Item==2) { 
@@ -123,7 +132,7 @@ class BattlePageStateNotifier extends StateNotifier<BattlePageState> with Widget
     }
   }
   void paper() {
-    state = state.copyWith(user1Item: 1,user2Item: Random().nextInt(3) + 1);
+    state = state.copyWith(user1Item: 3,user2Item: Random().nextInt(3) + 1);
     if(state.user2Item==1) {
       state = state.copyWith(user2Hp:state.user2Hp-state.user1Status3);
     } else if(state.user2Item==2) { 
