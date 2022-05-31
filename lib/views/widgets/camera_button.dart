@@ -80,7 +80,7 @@ class CameraButton extends StatelessWidget {
     return user;
   }
 
-  HealthFactory health = HealthFactory();
+  final HealthFactory health = HealthFactory();
 
   Future _fetchStepData() async {
     int? steps;
