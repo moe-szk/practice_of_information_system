@@ -9,11 +9,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:health/health.dart';
 
 import '../top_view.dart';
+import '../../models/user_model.dart';
 
 class CameraButton extends StatelessWidget {
-  CameraButton ({Key? key}): super(key:key);
+  CameraButton({Key? key}) : super(key: key);
 
   final _picker = ImagePicker();
 
@@ -32,7 +34,6 @@ class CameraButton extends StatelessWidget {
     }
     return base64Image;
   }
-
 
   Future _compressImageBytes(Uint8List imageBytes) async {
     List? result = await FlutterImageCompress.compressWithList(
@@ -56,8 +57,9 @@ class CameraButton extends StatelessWidget {
     }
     // String url = "http://localhost:8000/image";
     String url = "https://httpbin.org/post";
+    final steps = await _fetchStepData();
     Map<String, String> headers = {"content-type": "application/json"};
-    final obj = {"userId": 0, "imageBase64": base64Image, "step": 0};
+    final obj = {"userId": 0, "imageBase64": base64Image, "step": steps};
     String body = json.encode(obj);
 
     http.Response res =
@@ -73,27 +75,51 @@ class CameraButton extends StatelessWidget {
     final body = json.decode(res.body);
     print(body);
     // final user = User.fromJson(json.decode(body["data"]));
-    // final user = User.fromJson({"id": 0, "userName": "testUser", "status": 0});
-    //print(user);
-    //return user;
+    final user = User.fromJson({"id": 0, "userName": "testUser", "status": 0});
+    print(user);
+    return user;
+  }
+
+  HealthFactory health = HealthFactory();
+
+  Future _fetchStepData() async {
+    int? steps;
+
+    // get steps for today (i.e., since midnight)
+    final now = DateTime.now();
+    final yesterday = now.subtract(Duration(days: 1));
+
+    bool requested = await health.requestAuthorization([HealthDataType.STEPS]);
+
+    if (requested) {
+      try {
+        steps = await health.getTotalStepsInInterval(yesterday, now);
+      } catch (error) {
+        print("Caught exception in getTotalStepsInInterval: $error");
+      }
+
+      print('Total number of steps: $steps');
+      return steps;
+    } else {
+      print("Authorization not granted");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
       final notifier = ref.read(topPageProvider.notifier);
-      return Center(child: 
-      FloatingActionButton(onPressed:(() {
-          _getBase64Image();
-
-          // ToDo: ステータスの更新
-          // notifier.updateStatus();
-
-          print('a');
-        }), child: Icon(Icons.camera)),
+      return Center(
+        child: FloatingActionButton(
+            onPressed: (() {
+              notifier.startLoading();
+              _updateStatus()
+                  .then((user) => notifier.updateStatus(user.status))
+                  .whenComplete(() => notifier.stopLoading());
+              // 例外処理
+            }),
+            child: Icon(Icons.camera)),
       );
     });
   }
-   
-
 }

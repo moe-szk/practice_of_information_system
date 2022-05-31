@@ -40,7 +40,7 @@ class MyHomePage extends StatelessWidget {
             children: <Widget>[
               TopPage(),
               RankingPage(),
-              //HistoryPage(),
+              HistoryPage(),
             ],
             onPageChanged: (index) {
               print(index);
@@ -77,4 +77,7 @@ class HomePageStateNotifier extends StateNotifier<HomePageState> {
 }
 
 // ③ グローバルなProvider
-final homePageProvider =StateNotifierProvider<HomePageStateNotifier, HomePageState>((ref) {return HomePageStateNotifier();});
+final homePageProvider =
+    StateNotifierProvider<HomePageStateNotifier, HomePageState>((ref) {
+  return HomePageStateNotifier();
+});
