@@ -26,7 +26,6 @@ class TopPage extends StatelessWidget {
 class TopPageState {
   const TopPageState({
     this.id = 0,
-    // required this.id,
     this.stateNumber = 0,
     this.userName = 'You',
     this.isLoading = false,
@@ -44,6 +43,7 @@ class TopPageState {
   final int state3;
 
   TopPageState copyWith({
+    int? id,
     int? stateNumber,
     String? userName,
     bool? isLoading,
@@ -52,6 +52,7 @@ class TopPageState {
     int? state3,
   }) {
     return TopPageState(
+      id: id ?? this.id,
       stateNumber: stateNumber ?? this.stateNumber,
       userName: userName ?? this.userName,
       isLoading: isLoading ?? this.isLoading,
@@ -66,8 +67,12 @@ class TopPageState {
 class TopPageStateNotifier extends StateNotifier<TopPageState> {
   TopPageStateNotifier() : super(const TopPageState());
   // void increment() {}
-  void updateStatus(status,stapleValue,mainValue,sideValue) {
-    state = state.copyWith(stateNumber: status,state1:stapleValue,state2:mainValue,state3:sideValue);
+  void updateStatus(status, stapleValue, mainValue, sideValue) {
+    state = state.copyWith(
+        stateNumber: status,
+        state1: stapleValue,
+        state2: mainValue,
+        state3: sideValue);
     print("status is updated to $status");
   }
 
@@ -77,6 +82,16 @@ class TopPageStateNotifier extends StateNotifier<TopPageState> {
 
   void stopLoading() {
     state = state.copyWith(isLoading: false);
+  }
+
+  void register(id, userName, status, stapleValue, mainValue, sideValue) {
+    state = state.copyWith(
+        id: id,
+        userName: userName,
+        stateNumber: status,
+        state1: stapleValue,
+        state2: mainValue,
+        state3: sideValue);
   }
 }
 

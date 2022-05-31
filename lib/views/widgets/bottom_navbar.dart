@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../main.dart';
-
+import '../../home.dart';
 
 class BottomBar extends StatelessWidget {
   final PageController _pageController;
@@ -11,9 +10,8 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, child) {
-
       final notifier = ref.read(homePageProvider.notifier);
-      
+
       return BottomNavigationBar(
         currentIndex: notifier.state.selectedIndex,
         onTap: (index) {
@@ -58,7 +56,6 @@ class BottomBar extends StatelessWidget {
         unselectedIconTheme: const IconThemeData(size: 25, color: Colors.blue),
         // unselectedLabelStyle: const TextStyle(color: Colors.white),
         // unselectedItemColor: Colors.white,
-
       );
     });
   }
