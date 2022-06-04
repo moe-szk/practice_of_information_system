@@ -15,87 +15,125 @@ class SimpleLoginScreen extends StatefulWidget {
 }
 
 class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
-  String email = '';
-  String password = '';
-  bool hidePassword = true;
+  String userName = "";
+  String age = "";
+  String sex = "";
+  String height = "";
+  String weight = "";
 
   @override
   Widget build(BuildContext context) {
+    final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Sign Up'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.mail),
-                  hintText: 'hogehoge@qmail.com',
-                  labelText: 'Email Address',
-                ),
-                onChanged: (String value) {
-                  setState(() {
-                    email = value;
-                  });
-                },
-              ),
-              TextFormField(
-                obscureText: hidePassword,
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.lock),
-                  labelText: 'Password',
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      hidePassword ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        hidePassword = !hidePassword;
-                      });
-                    },
+            child: SingleChildScrollView(
+                reverse: true,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: bottomSpace),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.people),
+                          labelText: 'Name',
+                        ),
+                        onChanged: (String value) {
+                          setState(() {
+                            userName = value;
+                          });
+                        },
+                      ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.numbers),
+                          labelText: 'Age',
+                        ),
+                        onChanged: (String value) {
+                          setState(() {
+                            age = value;
+                          });
+                        },
+                      ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.wc),
+                          labelText: 'Gender',
+                        ),
+                        onChanged: (String value) {
+                          setState(() {
+                            sex = value;
+                          });
+                        },
+                      ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.height),
+                          labelText: 'Height',
+                        ),
+                        onChanged: (String value) {
+                          setState(() {
+                            height = value;
+                          });
+                        },
+                      ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.scale),
+                          labelText: 'Weight',
+                        ),
+                        onChanged: (String value) {
+                          setState(() {
+                            weight = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 30),
+                      RegisterButton(userName, age, sex, height, weight)
+                    ],
                   ),
-                ),
-                onChanged: (String value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 15),
-              const RegisterButton()
-            ],
-          ),
-        ),
+                ))),
       ),
     );
   }
 }
 
 class RegisterButton extends StatelessWidget {
-  const RegisterButton({Key? key}) : super(key: key);
+  String userName = "";
+  String age = "";
+  String sex = "";
+  String height = "";
+  String weight = "";
+  RegisterButton(this.userName, this.age, this.sex, this.height, this.weight,
+      {Key? key})
+      : super(key: key);
 
   Future _postInf() async {
     String url = "http://localhost:8000/user-create";
     Map<String, String> headers = {"content-type": "application/json"};
     final obj = {
-      "userName": "testUser",
-      "age": 22,
-      "sex": 1,
-      "height": 170,
-      "weight": 60
+      "userName": userName,
+      "age": int.parse(age),
+      "sex": int.parse(sex),
+      "height": int.parse(height),
+      "weight": int.parse(weight)
     };
     String body = json.encode(obj);
+    print(body);
 
     http.Response res =
         await http.post(Uri.parse(url), headers: headers, body: body);
